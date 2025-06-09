@@ -5,3 +5,6 @@ node_modules/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+#Stores the github workflow for now. I don't want it to run just yet
+.tempGithub/
