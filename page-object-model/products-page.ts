@@ -1,16 +1,123 @@
 import type { Locator, Page } from "@playwright/test";
 
+type Item = {
+	price: string;
+	name: string;
+};
+
 class ProductsPage {
 	page: Page;
 
 	header: Locator;
 
+	btn_hamburger: Locator;
+	ahref_allitem: Locator;
+	ahref_about: Locator;
+	ahref_logout: Locator;
+
+	btn_additem: Locator;
+	btn_removeitem: Locator;
+	span_cartBadge: Locator;
+
+	select_sortContainer: Locator;
+
+	div_itemName: Locator;
+	div_itemPrice: Locator;
+
 	constructor(page: Page) {
 		this.header = page.getByText("Products");
+
+		this.btn_hamburger = page.getByRole("button", { name: "open menu" });
+		this.ahref_allitem = page.getByText("all items");
+		this.ahref_about = page.getByText("about");
+		this.ahref_logout = page.getByText("logout");
+
+		this.btn_additem = page.getByRole("button", { name: "add to cart" });
+		this.btn_removeitem = page.getByRole("button", { name: "remove" });
+		this.span_cartBadge = page.getByTestId("shopping-cart-badge");
+
+		this.select_sortContainer = page.getByTestId("product-sort-container");
+
+		this.div_itemName = page.getByTestId("inventory-item-name");
+		this.div_itemPrice = page.getByTestId("inventory-item-price");
 	}
 
-	getHeader() {
+	getHeader(): Locator {
 		return this.header;
+	}
+
+	async clickBtnHamburger() {
+		await this.btn_hamburger.click();
+	}
+
+	async clickAhrefAllItem() {
+		await this.ahref_allitem.click();
+	}
+
+	async clickAhrefAbout() {
+		await this.ahref_about.click();
+	}
+
+	async clickAhrefLogout() {
+		await this.ahref_logout.click();
+	}
+
+	async clickBtnAddItemRand() {
+		await this.btn_additem
+			.nth(Math.floor(Math.random() * (await this.btn_additem.count())))
+			.click();
+	}
+
+	async clickBtnRemoveItemRand() {
+		await this.btn_removeitem
+			.nth(Math.floor(Math.random() * (await this.btn_removeitem.count())))
+			.click();
+	}
+
+	getSpanCartBadge(): Locator {
+		return this.span_cartBadge;
+	}
+
+	async clickSortAZ() {
+		await this.select_sortContainer.click();
+		await this.select_sortContainer.selectOption("az");
+	}
+
+	async clickSortZA() {
+		await this.select_sortContainer.click();
+		await this.select_sortContainer.selectOption("za");
+	}
+
+	async clickSortLoHi() {
+		await this.select_sortContainer.click();
+		await this.select_sortContainer.selectOption("lohi");
+	}
+
+	async clickSortHiLo() {
+		await this.select_sortContainer.click();
+		await this.select_sortContainer.selectOption("hilo");
+	}
+
+	async getItems(): Promise<Item[]> {
+		const numitem = await this.div_itemName.count();
+		const items: Item[] = [];
+		for (let i = 0; i < numitem; i++) {
+			try {
+				const [name, price] = await Promise.all([
+					this.div_itemName.nth(i).textContent(),
+					this.div_itemPrice.nth(i).textContent(),
+				]);
+
+				items.push({
+					name: name?.trim() || "",
+					price: price?.trim() || "",
+				});
+			} catch (error) {
+				console.warn(`Failed to extract item ${i}:`, error);
+			}
+		}
+
+		return items;
 	}
 }
 

@@ -39,6 +39,10 @@ class LoginPage {
 	getErrorMsg(): Locator {
 		return this.error;
 	}
+
+	async goto() {
+		await this.page.goto("https://www.saucedemo.com");
+	}
 }
 
 export { LoginPage };

@@ -12,6 +12,8 @@ The place we are testing it at. So if we are testing a login of a website then i
 - The Test Scope
 What are we testing. If it's login, then is the login flow correct with different credinatials? If it's compiler, does it compile depending on the input and formatting? If it's the Search results and sorting, are the items fetched the most up to date, correct order, and formatting (json)?
 
+I like to think of it as more what do you see can what can you do on the page. If you want to maximize the test, then every little thing should be tested otherwise, test only the core functionality.
+
 - Assumptions
 Something that we assume beforehand to reduce the **complexity** and infer beforehand.
 
@@ -25,6 +27,7 @@ The test that we plan on doing and what we expect the result to be: failure or s
     - clicking checkout without logging in (failure)
     - clicking checkout with out of stock items (failure)
     - etc. (if i can of more)
+> Honestly it can just be what you are doing. Should be related to the test scope.
 
 - Expected Behaviors
 What you would expect depending on your test cases. These are the core of the test cases and what you are trying to test. You can add sub expected behaviors but the core ones are the things you are trying to test. If they break, then the whole feature is considered broken. Examples for *Checkout* are:
@@ -34,7 +37,7 @@ What you would expect depending on your test cases. These are the core of the te
     - Shows not signed in when checkout without login
 
 - Out of Scopes
-This is what you are not testing or expecting for test for now. These are not exactly core features, such as **speed**, **responsiveness**, etc. I like to think of it as QOL things that are typically not really tested initially.
+This is what you are not testing or expecting for test for now. These are not exactly core features, such as **speed**, **responsiveness**, **accessibility**, etc. I like to think of it as QOL things that are typically not really tested initially.
 
 
 ### Test Plan Template
