@@ -1,4 +1,5 @@
 import type { Locator, Page } from "@playwright/test";
+import { ProductItemPage } from "../page-object-model/product-item.ts";
 
 type Item = {
 	price: string;
@@ -10,13 +11,15 @@ class ProductsPage {
 
 	header: Locator;
 
-	btn_hamburger: Locator;
 	ahref_allitem: Locator;
 	ahref_about: Locator;
 	ahref_logout: Locator;
+	ahref_item: Locator;
 
+	btn_hamburger: Locator;
 	btn_additem: Locator;
 	btn_removeitem: Locator;
+
 	span_cartBadge: Locator;
 
 	select_sortContainer: Locator;
@@ -25,6 +28,8 @@ class ProductsPage {
 	div_itemPrice: Locator;
 
 	constructor(page: Page) {
+		this.page = page;
+
 		this.header = page.getByText("Products");
 
 		this.btn_hamburger = page.getByRole("button", { name: "open menu" });
@@ -40,10 +45,16 @@ class ProductsPage {
 
 		this.div_itemName = page.getByTestId("inventory-item-name");
 		this.div_itemPrice = page.getByTestId("inventory-item-price");
+
+		this.ahref_item = page.getByRole("link").filter({ has: this.div_itemName });
 	}
 
 	getHeader(): Locator {
 		return this.header;
+	}
+
+	getItemName(): Locator {
+		return this.page.getByTestId("inventory-item-name");
 	}
 
 	async clickBtnHamburger() {
@@ -96,6 +107,18 @@ class ProductsPage {
 	async clickSortHiLo() {
 		await this.select_sortContainer.click();
 		await this.select_sortContainer.selectOption("hilo");
+	}
+
+	async clickRandItem(): Promise<string | null> {
+		const numItem = await this.ahref_item.count();
+		const randNum = Math.floor(Math.random() * numItem);
+
+		const loc = this.ahref_item.nth(randNum);
+
+		const item = await loc.textContent();
+		await loc.click();
+
+		return item;
 	}
 
 	async getItems(): Promise<Item[]> {
