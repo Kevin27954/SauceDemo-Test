@@ -1,11 +1,6 @@
 import type { Locator, Page } from "@playwright/test";
-import { ProductsPage } from "./products-page.ts";
 
 class LoginPage {
-	/**
-	 * @param {import('@playwright/test').Page} page
-	 */
-
 	page: Page;
 
 	input_user: Locator;
@@ -22,12 +17,12 @@ class LoginPage {
 		this.error = page.getByTestId("error");
 	}
 
-	async loginValidUser(user: string, pass: string): Promise<ProductsPage> {
+	async loginValidUser(user: string, pass: string): Promise<Page> {
 		await this.input_user.fill(user);
 		await this.input_pass.fill(pass);
 		await this.btn_login.click();
 
-		return new ProductsPage(this.page);
+		return this.page;
 	}
 
 	async loginInvalidUser(user: string, pass: string) {

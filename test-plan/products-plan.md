@@ -1,7 +1,7 @@
 Products Plan
 
 ### Feature
-Login
+Product
 
 ### Url
 `https://www.saucedemo.com/inventory.html` 

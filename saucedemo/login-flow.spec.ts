@@ -1,12 +1,14 @@
 import { expect } from "@playwright/test";
 import { test } from "../fixture/fixtures.ts";
+import { ProductsPage } from "../page-object-model/products-page.ts";
 
 test.describe("login test", () => {
 	test("login-correct-user", async ({ loginPage }) => {
 		const user = "standard_user";
 		const pass = "secret_sauce";
 
-		const products_page = await loginPage.loginValidUser(user, pass);
+		const page = await loginPage.loginValidUser(user, pass);
+		const products_page = new ProductsPage(page);
 
 		await expect(products_page.getHeader()).toBeVisible();
 	});

@@ -1,5 +1,4 @@
 import type { Locator, Page } from "@playwright/test";
-import { ProductItemPage } from "../page-object-model/product-item.ts";
 
 type Item = {
 	price: string;
@@ -49,6 +48,10 @@ class ProductsPage {
 		this.ahref_item = page.getByRole("link").filter({ has: this.div_itemName });
 	}
 
+	getPage(): Page {
+		return this.page;
+	}
+
 	getHeader(): Locator {
 		return this.header;
 	}
@@ -77,6 +80,14 @@ class ProductsPage {
 		await this.btn_additem
 			.nth(Math.floor(Math.random() * (await this.btn_additem.count())))
 			.click();
+	}
+
+	async clickBtnAddAllItem() {
+		const numItem = await this.btn_additem.count();
+		for (let i = 0; i < numItem; i++) {
+			const btn = this.btn_additem.first();
+			await btn.click();
+		}
 	}
 
 	async clickBtnRemoveItemRand() {
