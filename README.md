@@ -20,9 +20,24 @@ Something to note though is that when you have the same locator that can be used
 
 ### Page Object Model POM
 So about this one, **POM** or **page-object-model** is just basically the interacter. It's only purpose is to grab the data and elements from the page. The `.spec` files are only testing. As a result, I **SHOULD NOT** see any `page.locator()` in spec. If I ever write one either I'm drunk or it was someone else using my account.
+One thing to note is that it is fine to have things like `click4Times` or `clickRandomly10Times` in the **POM** since it is still interacting within the page. But other things like calc or math should be in the utils unless it can be done in 1 liners or won't be used else where.
+> Although it is might be better to have it as a general function like `clickXTimes(num: number)`.
+
+### Error handling in POM
+So my idea is that if there is any error in trying to fetch the elements then I should assume that there is something wrong with the page and thus, error out. And I don't think there is any point in time where I shuold try to catch the error within the **POM**. I do think that we should test the error or something in the test itself though.
 
 ### Fixtures
 This is basically jsut somethign that you would use to delete the `beforeEach()` and `afterEach` that you normally have. If you need it to repeat for a lot of things, it's better to just have fixtures over creating multiple `beforeEach()` in each files. I'd like to belive that the current test I am writing are a good example of when to use fixtures, since each one needs to interact with the `page` and I minimize outside code from the `spec` files. 
- Of course, I could be wrong here.
-However, there should still be times when it might better to use `beforeEach()`, probably when you need to something small and quick for like 1-2 test cases. Once you start adding more and the `beforeEach()` is being applied to more and more test, it's probably jsut better to have it as a **fixture** instead I think. Similar to extracting functionality into it's own function once it starts repeating 5 too many times.
 
+*Of course, I could be wrong here.*
+
+However, there should still be times when it might better to use `beforeEach()`, probably when you need to something small and quick for like 1-2 test cases. Once you start adding more and the `beforeEach()` is being applied to more and more test, it's probably jsut better to have it as a **fixture** instead I think. Similar to extracting functionality into it's own function once it starts repeating 5 too many times, or something similar.
+> that wording for the sentence mgiht be wrong.
+
+### test.step
+So apparently this is a thing. But like this is only used when you want to group simliar logic with one another or when you want to have extremely clear logs in your test. But usually it is fine to not include it. Well for a beginner like me, I probably will struggle to find places to use this in, maybe seniors will find more uses for it.
+> Let me ask this to someone lul.
+
+
+
+*This is just me writing them out so I can have stuff to look back to if I need this and to have a better memorization of this since I am thinking about it.*

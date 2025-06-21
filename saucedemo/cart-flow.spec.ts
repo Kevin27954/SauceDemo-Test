@@ -15,10 +15,9 @@ test.describe("cart test - nav & static elements", () => {
 	});
 });
 
-test.describe
-	.only("cart test - with items in cart", () => {
-		test("remove item from cart", async ({ cartsNotEmptyPage }) => {
-			await cartsNotEmptyPage.clickRemoveItemOne();
-			await expect(cartsNotEmptyPage.getSpanCartBadge()).toContainText("5");
-		});
+test.describe("cart test - with items in cart", () => {
+	test("remove item from cart", async ({ cartsNotEmptyPage }) => {
+		await cartsNotEmptyPage.clickRemoveItemOne();
+		await expect(cartsNotEmptyPage.getSpanCartBadge()).toContainText("5");
 	});
+});

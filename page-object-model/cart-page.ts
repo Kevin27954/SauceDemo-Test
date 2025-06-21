@@ -8,6 +8,7 @@ class CartPage {
 	btn_removeItem: Locator;
 
 	span_cartBadge: Locator;
+	span_title: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -17,10 +18,15 @@ class CartPage {
 		this.btn_removeItem = page.getByTestId("remove-sauce-labs-backpack");
 
 		this.span_cartBadge = page.getByTestId("shopping-cart-badge");
+		this.span_title = page.getByTestId("title");
 	}
 
 	getSpanCartBadge(): Locator {
 		return this.span_cartBadge;
+	}
+
+	getSpanTitle(): Locator {
+		return this.span_title;
 	}
 
 	async goto() {

@@ -10,6 +10,7 @@ Login
 Validate the login flow with valid and invalid credentials 
 
 ### Assumptions 
+The user is logged in.
 Credentials are provided by env or randomly generated in secure location  
 
 ### Test Inputs

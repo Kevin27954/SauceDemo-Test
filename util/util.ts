@@ -12,4 +12,9 @@ function compStringPrice(a: string, b: string): number {
 	return Number(dollarA) - Number(dollarB);
 }
 
-export { compStringPrice };
+function calcTax(price: number): number {
+	const tax = price * 0.08;
+	return Math.round(tax * 100) / 100;
+}
+
+export { compStringPrice, calcTax };

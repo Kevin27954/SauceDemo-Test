@@ -3,14 +3,14 @@ import { test } from "../fixture/fixtures.ts";
 import { ProductsPage } from "../page-object-model/products-page.ts";
 
 test.describe("login test", () => {
-	test("login-correct-user", async ({ loginPage }) => {
+	test("login-correct-user", async ({ loginPage, page }) => {
 		const user = "standard_user";
 		const pass = "secret_sauce";
 
-		const page = await loginPage.loginValidUser(user, pass);
+		await loginPage.loginValidUser(user, pass);
 		const products_page = new ProductsPage(page);
 
-		await expect(products_page.getHeader()).toBeVisible();
+		await expect(products_page.getTitle()).toBeVisible();
 	});
 
 	test("login-locked-user", async ({ loginPage }) => {

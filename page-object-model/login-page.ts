@@ -17,12 +17,10 @@ class LoginPage {
 		this.error = page.getByTestId("error");
 	}
 
-	async loginValidUser(user: string, pass: string): Promise<Page> {
+	async loginValidUser(user: string, pass: string) {
 		await this.input_user.fill(user);
 		await this.input_pass.fill(pass);
 		await this.btn_login.click();
-
-		return this.page;
 	}
 
 	async loginInvalidUser(user: string, pass: string) {

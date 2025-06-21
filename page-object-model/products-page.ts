@@ -8,7 +8,7 @@ type Item = {
 class ProductsPage {
 	page: Page;
 
-	header: Locator;
+	span_title: Locator;
 
 	ahref_allitem: Locator;
 	ahref_about: Locator;
@@ -29,7 +29,7 @@ class ProductsPage {
 	constructor(page: Page) {
 		this.page = page;
 
-		this.header = page.getByText("Products");
+		this.span_title = page.getByTestId("title");
 
 		this.btn_hamburger = page.getByRole("button", { name: "open menu" });
 		this.ahref_allitem = page.getByText("all items");
@@ -52,8 +52,8 @@ class ProductsPage {
 		return this.page;
 	}
 
-	getHeader(): Locator {
-		return this.header;
+	getTitle(): Locator {
+		return this.span_title;
 	}
 
 	getItemName(): Locator {
@@ -132,23 +132,23 @@ class ProductsPage {
 		return item;
 	}
 
+	/**
+	 * This should fail and the test it is used in if at any time it was not able to get the element.
+	 * I feel like this is important since that would mean the page has some poetntial issues.
+	 */
 	async getItems(): Promise<Item[]> {
 		const numitem = await this.div_itemName.count();
 		const items: Item[] = [];
 		for (let i = 0; i < numitem; i++) {
-			try {
-				const [name, price] = await Promise.all([
-					this.div_itemName.nth(i).textContent(),
-					this.div_itemPrice.nth(i).textContent(),
-				]);
+			const [name, price] = await Promise.all([
+				this.div_itemName.nth(i).textContent(),
+				this.div_itemPrice.nth(i).textContent(),
+			]);
 
-				items.push({
-					name: name?.trim() || "",
-					price: price?.trim() || "",
-				});
-			} catch (error) {
-				console.warn(`Failed to extract item ${i}:`, error);
-			}
+			items.push({
+				name: name.trim(),
+				price: price.trim(),
+			});
 		}
 
 		return items;

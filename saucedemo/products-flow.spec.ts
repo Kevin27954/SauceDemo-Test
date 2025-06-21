@@ -75,6 +75,7 @@ test.describe("products test", () => {
 
 	test("sort High-Low price", async ({ productsPage }) => {
 		await productsPage.clickSortHiLo();
+
 		const items = await productsPage.getItems();
 
 		const prices = items.map((item) => item.price);
